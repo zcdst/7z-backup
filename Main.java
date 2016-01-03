@@ -7,41 +7,78 @@ public class Main {
 	static final String DESTINATIONDIR = "P:\\Backup\\";
 	static final String EXE = "C:\\Program Files\\7-Zip\\7z.exe";
 	static String name;
+	static int k = 0;
 	// static final String COMMAND = "7z u -t7z -mx9 out.7z file.ext";
 
 	static ArrayList<String> arguments = new ArrayList<String>();
+	static ArrayList<Folder> f = new ArrayList<Folder>();
 
 
 	public static void main(String[] args) throws Exception {
 
-		setName();
+		// createExclusions();
+		// setName();
 
-		arguments.add(EXE);
-		arguments.add("u");
-		arguments.add("-pASDFGHJKL");
-		arguments.add("-mhe");
-		arguments.add("-t7z");
-		arguments.add("-mx9");
-		arguments.add(DESTINATIONDIR + name);
+		// arguments.add(EXE);
+		// arguments.add("u");
+		// arguments.add("-pASDFGHJKL");
+		// arguments.add("-mhe");
+		// arguments.add("-t7z");
+		// arguments.add("-mx9");
 
-		File f = new File(SOURCE);
-		Scanner sc = new Scanner(f);
+		// arguments.addAll(exclusions);
+
+
+		// arguments.add(DESTINATIONDIR + name);
+
+		File source = new File(SOURCE);
+		Scanner sc = new Scanner(source);
+
+		String strang = null;
+		String tmpfolder = null;
+		Boolean isFolder = true;
+		ArrayList<String> tmpex = new ArrayList<String>();
+
 
 		while (sc.hasNextLine()) {
-			arguments.add(sc.nextLine());
+
+			strang = sc.nextLine();
+
+			if (isFolder && strang.length() > 0) {
+				isFolder = false;
+				tmpfolder = strang;
+				continue;
+			}
+
+			if (strang.length() > 0) {
+				tmpex.add(strang);
+			} else if (tmpfolder != null) {
+				isFolder = true;
+				f.add(new Folder(tmpfolder, new ArrayList<String>(tmpex)));
+				tmpex.clear();
+				tmpfolder = null;
+			}
+			
 		}
-		sc.close();
+
+		System.out.println("----");
+		for (Folder z : f) {
+			System.out.println(z.path + "-- folder");
+			for (String x : z.exclusions) {
+				System.out.println(x + " -- exclusion");
+			}
+		}
 
 
 
-			ProcessBuilder cspb = new ProcessBuilder(arguments);
-			cspb.inheritIO();
-			Process csp = cspb.start();
-			csp.waitFor();
+			// ProcessBuilder cspb = new ProcessBuilder(arguments);
+			// cspb.inheritIO();
+			// Process csp = cspb.start();
+			// csp.waitFor();
 	}
 
 
-	private static void setName() {
+/*	private static void setName() {
 
 		File f1 = new File(DESTINATIONDIR + "Backup_1.7z");
 		File f2 = new File(DESTINATIONDIR + "Backup_2.7z");
@@ -66,7 +103,13 @@ public class Main {
 		}
 
 
-	}
+	}*/
+
+/*	private static void createExclusions() {
+		String s = "-x!";
+		exclusions.add(s + "Apple Computer");
+
+	}*/
 
 
 
