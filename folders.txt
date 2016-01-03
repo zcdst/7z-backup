@@ -4,8 +4,9 @@
 
 
 C:\Temp\retroarch
-\emulator.tools.retroarch-ORIG
-\emulator.tools.retroarch
+emulator.tools.retroarch-ORIG\lib
+emulator.tools.retroarch\lib
+emulator.tools.retroarch\bin
 
 
 

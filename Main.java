@@ -45,7 +45,7 @@ public class Main {
 
 			if (strang.length() > 0) {
 				// tmpex.add(currFolder + "\\" + strang);
-				tmpex.add("-x!" + currFolder.substring(currFolder.lastIndexOf("\\") + 1, currFolder.length()) + strang);
+				tmpex.add("-x!" + currFolder.substring(currFolder.lastIndexOf("\\") + 1, currFolder.length()) + "\\" + strang);
 			} else if (currFolder.length() > 0) {
 				isFolder = true;
 				f.add(new Folder(currFolder, new ArrayList<String>(tmpex)));
