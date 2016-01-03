@@ -34,8 +34,8 @@ public class Main {
 		File source = new File(SOURCE);
 		Scanner sc = new Scanner(source);
 
-		String strang = null;
-		String tmpfolder = null;
+		String strang = "";
+		String currFolder = "";
 		Boolean isFolder = true;
 		ArrayList<String> tmpex = new ArrayList<String>();
 
@@ -46,17 +46,17 @@ public class Main {
 
 			if (isFolder && strang.length() > 0) {
 				isFolder = false;
-				tmpfolder = strang;
+				currFolder = strang;
 				continue;
 			}
 
 			if (strang.length() > 0) {
 				tmpex.add(strang);
-			} else if (tmpfolder != null) {
+			} else if (currFolder.length() > 0) {
 				isFolder = true;
-				f.add(new Folder(tmpfolder, new ArrayList<String>(tmpex)));
+				f.add(new Folder(currFolder, new ArrayList<String>(tmpex)));
 				tmpex.clear();
-				tmpfolder = null;
+				currFolder = "";
 			}
 			
 		}

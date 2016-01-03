@@ -3,6 +3,11 @@ exclusion1
 exclusiontwo
 
 E:\\this\\one
+yean
+thisalso
+wefio
+awegiogwaeio
+
 
 C:\\mang\\yep
 exclusionfirst
