@@ -4,11 +4,8 @@
 
 
 C:\Temp\retroarch
-dsemu
-skin.confluence.custom.mod-master
-ustvnow-m3u-server-master
-
-
+\emulator.tools.retroarch-ORIG
+\emulator.tools.retroarch
 
 
 
