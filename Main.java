@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.*;
 
+
+
 public class Main {
 
 	static final String SOURCE = "folders.txt";
@@ -9,6 +11,8 @@ public class Main {
 	static String name;
 	static int k = 0;
 	// static final String COMMAND = "7z u -t7z -mx9 out.7z file.ext";
+	// single exclusions: -x!c:\full\path
+	// exclude all instances: -xr!name
 
 	static ArrayList<String> arguments = new ArrayList<String>();
 	static ArrayList<Folder> f = new ArrayList<Folder>();
@@ -16,33 +20,22 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 
-		// createExclusions();
-		// setName();
-
-		// arguments.add(EXE);
-		// arguments.add("u");
-		// arguments.add("-pASDFGHJKL");
-		// arguments.add("-mhe");
-		// arguments.add("-t7z");
-		// arguments.add("-mx9");
-
-		// arguments.addAll(exclusions);
-
-
-		// arguments.add(DESTINATIONDIR + name);
+		setName();
 
 		File source = new File(SOURCE);
 		Scanner sc = new Scanner(source);
-
 		String strang = "";
 		String currFolder = "";
 		Boolean isFolder = true;
 		ArrayList<String> tmpex = new ArrayList<String>();
 
-
 		while (sc.hasNextLine()) {
 
 			strang = sc.nextLine();
+
+			if (strang.startsWith("#")) {
+				continue;
+			}
 
 			if (isFolder && strang.length() > 0) {
 				isFolder = false;
@@ -51,7 +44,8 @@ public class Main {
 			}
 
 			if (strang.length() > 0) {
-				tmpex.add(strang);
+				// tmpex.add(currFolder + "\\" + strang);
+				tmpex.add("-x!" + strang);
 			} else if (currFolder.length() > 0) {
 				isFolder = true;
 				f.add(new Folder(currFolder, new ArrayList<String>(tmpex)));
@@ -61,14 +55,27 @@ public class Main {
 			
 		}
 
-		System.out.println("----");
+		sc.close();
+
+		arguments.add(EXE);
+		arguments.add("u");	// update
+		arguments.add("-pASDFGHJKL");	// password
+		arguments.add("-mhe");	// encrypt headers
+		arguments.add("-t7z");	// 7zip compression
+		arguments.add("-mx9");	// max compression
+		arguments.add(DESTINATIONDIR + name);	// output file
+
 		for (Folder z : f) {
-			System.out.println(z.path + "-- folder");
+			arguments.add(z.path);
 			for (String x : z.exclusions) {
-				System.out.println(x + " -- exclusion");
+				arguments.add(x);
 			}
 		}
 
+
+		for (String x : arguments) {
+			System.out.println(x);
+		}
 
 
 			// ProcessBuilder cspb = new ProcessBuilder(arguments);
@@ -78,7 +85,7 @@ public class Main {
 	}
 
 
-/*	private static void setName() {
+	private static void setName() {
 
 		File f1 = new File(DESTINATIONDIR + "Backup_1.7z");
 		File f2 = new File(DESTINATIONDIR + "Backup_2.7z");
@@ -103,13 +110,8 @@ public class Main {
 		}
 
 
-	}*/
+	}
 
-/*	private static void createExclusions() {
-		String s = "-x!";
-		exclusions.add(s + "Apple Computer");
-
-	}*/
 
 
 
